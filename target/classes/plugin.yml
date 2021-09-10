@@ -1,0 +1,4 @@
+name: NUTTDiscordBot
+main: com.github.nutt1101.NUTTDiscorBot
+version: 1.0
+api-version: 1.15
