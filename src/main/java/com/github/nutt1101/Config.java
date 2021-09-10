@@ -30,7 +30,7 @@ public class Config {
         botToken = config.getString("Bot-Token");
         channelID = config.getString("Discord-Channel");
         bootEmAuthor = config.getString("Boot-EmbedBuilder.Author.Text");
-        bootEmAuthorImageLink = config.getString("Boot-EmbedBuilder.Author.Link");
+        bootEmAuthorTextLink = config.getString("Boot-EmbedBuilder.Author.Link");
         bootEmAuthorImageLink = config.getString("Boot-EmbedBuilder.Author.Image");
         bootEmHexColor = config.getString("Boot-EmbedBuilder.HexColor");
         bootEmDescription = config.getString("Boot-EmbedBuilder.Description");

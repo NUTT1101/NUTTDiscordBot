@@ -3,7 +3,7 @@ package com.github.nutt1101;
 import java.util.logging.Level;
 import java.awt.Color;
 
-import com.github.nutt1101.discord_listener.BotDisconnect;
+import com.github.nutt1101.discord_listener.BotCommand;
 import com.github.nutt1101.discord_listener.BotReady;
 
 import org.bukkit.ChatColor;
@@ -20,11 +20,10 @@ public class NUTTDiscordBot extends JavaPlugin{
     public void onEnable() {
         this.getLogger().log(Level.INFO, ChatColor.GREEN + "Power by NUTT1101");
         Config.pluginInit();
-        
         try {
             jda = JDABuilder.createDefault(Config.botToken).build();
             jda.addEventListener(new BotReady());
-            jda.addEventListener(new BotDisconnect());
+            jda.addEventListener(new BotCommand());
             jda.awaitReady();
         } catch (Exception e) {
             e.printStackTrace();
