@@ -1,0 +1,9 @@
+Bot-Token: "ODgzNjc3MDYwMTE4MjI4OTky.YTNaZQ.hZNeFrzj4EnIldZOitI23nByBB0"
+Discord-Channel: "885731450048098314"
+Boot-EmbedBuilder:
+  HexColor: "#007654"
+  Author:
+    Text: "機器人已開機"
+    Link: "https://www.dyu.edu.tw"
+    Image: "https://i.imgur.com/6zaOG3Q.png"
+  Description: "**這是一個可以爬取學校最新公告的爬蟲機器人**\n**開發: <@473018985299050497>**"

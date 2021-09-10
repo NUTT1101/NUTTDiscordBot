@@ -1,0 +1,5 @@
+name: NUTTDiscordBot
+main: com.github.nutt1101.NUTTDiscordBot
+authors: [NUTT1101]
+version: 1.0
+api-version: 1.13
