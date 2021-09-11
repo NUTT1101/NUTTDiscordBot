@@ -28,7 +28,7 @@ public class NUTTDiscordBot extends JavaPlugin{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+        new asyn().run();
     }
 
     @Override

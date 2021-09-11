@@ -42,19 +42,15 @@ public class BotCommand extends ListenerAdapter{
 
             try {
                 Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
-                String data = document.getElementsByTag("script").get(5).toString().split("\n")[5].split("'")[1];
-                JsonParser parser = new JsonParser();
-                JsonArray jsonArray = parser.parse(data).getAsJsonArray();
-
+                JsonArray jsonArray = getDataJsonaArray(document);    
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 String description = "";
 
-                for (int i=0; i< 15; i++) {
+                for (int i=0; i < 15; i++) {
                     embedBuilder.setAuthor(document.title() + "公告", "http://fresh.dyu.edu.tw/", Config.bootEmAuthorImageLink);
 
                     description = description + String.valueOf(i + 1) +  ". [" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
-                        "https://www.dyu.edu.tw/news.html?msg_ID=" + jsonArray.get(i).getAsJsonObject().get("ID").getAsString() +"&pool_ID=37&isHidden=1&goBack=1"
-                        +")\n\n";
+                        getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
                     
                 }
                 embedBuilder.setDescription(description);
@@ -66,6 +62,22 @@ public class BotCommand extends ListenerAdapter{
             
         }
     }
+
+    public static JsonArray getDataJsonaArray(Document document) {
+        try {
+            String data = document.getElementsByTag("script").get(5).toString().split("\n")[5].split("'")[1];
+            JsonParser parser = new JsonParser();
+            JsonArray jsonArray = parser.parse(data).getAsJsonArray();
+            return jsonArray;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     
-    
+    public static String getLink(String id) {
+        return "https://www.dyu.edu.tw/news.html?msg_ID=" + id +"&pool_ID=37&isHidden=1&goBack=1";
+    }
 }
