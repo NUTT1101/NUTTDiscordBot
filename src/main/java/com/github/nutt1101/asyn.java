@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 
-public class asyn {
+public class Asyn {
     private Plugin plugin = NUTTDiscordBot.getPlugin(NUTTDiscordBot.class);
     private final JDA jda = NUTTDiscordBot.jda;
     private String id = "";

@@ -1,6 +1,8 @@
 package com.github.nutt1101.discord_listener;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.github.nutt1101.Config;
 import com.github.nutt1101.SSLHelper;
@@ -20,6 +22,7 @@ public class BotCommand extends ListenerAdapter{
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase("hi")) {
             event.getChannel().sendMessage("Hi! 你好! " + event.getMessage().getAuthor().getAsMention()).queue();;
+            return;
         }
         
         if (event.getMessage().getContentRaw().equalsIgnoreCase("dayeh")) {
@@ -28,6 +31,7 @@ public class BotCommand extends ListenerAdapter{
             embedBuilder.setDescription("[手機版請點我](http://fresh.dyu.edu.tw/)");
             embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
             event.getChannel().sendMessage(embedBuilder.build()).queue();
+            return;
         }
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase("fresh")) {
@@ -35,7 +39,8 @@ public class BotCommand extends ListenerAdapter{
             embedBuilder.setAuthor("點我進入大葉大學新生專區", "http://fresh.dyu.edu.tw/", Config.bootEmAuthorImageLink);
             embedBuilder.setDescription("[手機版請點我](http://fresh.dyu.edu.tw/)");
             embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
-            event.getChannel().sendMessage(embedBuilder.build()).queue();;
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
+            return;
         }
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase("fresh_ann")) {
@@ -44,22 +49,58 @@ public class BotCommand extends ListenerAdapter{
                 Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
                 JsonArray jsonArray = getDataJsonaArray(document);    
                 EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
                 String description = "";
 
                 for (int i=0; i < 15; i++) {
                     embedBuilder.setAuthor(document.title() + "公告", "http://fresh.dyu.edu.tw/", Config.bootEmAuthorImageLink);
 
-                    description = description + String.valueOf(i + 1) +  ". [" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
+                    if (jsonArray.get(i) != null) {
+                        description = description + String.valueOf(i + 1) +  ". [" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
                         getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
+                    }
                     
                 }
                 embedBuilder.setDescription(description);
                 event.getChannel().sendMessage(embedBuilder.build()).queue();;
+                return;
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }               
+            }      
+
+            return;
+        }
+
+        if (event.getMessage().getContentRaw().contains("fresh_ann today")) {
+            try {
+                Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                JsonArray jsonArray = getDataJsonaArray(document);
+                Date date = new Date();
+                SimpleDateFormat sm = new SimpleDateFormat("yyyy/MM/dd");
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                String description = "";
+                embedBuilder.setAuthor("新生專區今天的公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
+                embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
+
+                for (int i=0 ; i < jsonArray.size(); i++) {
+                    if (jsonArray.get(i) != null) {
+                        String docDate = jsonArray.get(i).getAsJsonObject().get("update").getAsString().replace(" ", "");
+                        
+                        if (sm.format(date).equals(docDate)) {
+                            description = description + String.valueOf(i + 1) +  ". [" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
+                            getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
+                        }
+                    }
+                }
+
+                description = description.equals("") ? "今天 `" + sm.format(date) + "` 沒有公告" : description;
+                embedBuilder.setDescription(description);
+                event.getChannel().sendMessage(embedBuilder.build()).queue();
             
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

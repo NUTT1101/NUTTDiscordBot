@@ -1,7 +1,8 @@
 # NUTTDiscordBot
 
 This is a Discord Bot to get the latest news from [DaYeh_Fresh](https://www.dyu.edu.tw/news.html?pool_ID=37).
-Can be used on `Minecraft` Server.
+
+This plugin can be used on `Minecraft` Server.
 
 Used:
 - [jsoup](https://jsoup.org/) `For web crawler.`
