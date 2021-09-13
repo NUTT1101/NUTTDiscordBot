@@ -9,6 +9,7 @@ import com.github.nutt1101.SSLHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -93,9 +94,13 @@ public class BotCommand extends ListenerAdapter{
                     }
                 }
                 
-                for (int i=0; i < description.split("\n\n").length ; i++) {
-                    
+                String sort[] = description.split("\n\n");
+
+                for (int i=0; i < sort.length ; i++) {
+                    sort[i] = String.valueOf(i+1) + " ." + sort[i]; 
                 }
+
+                description = StringUtils.join(sort, "\n\n");
 
                 description = description.equals("") ? "今天 `" + sm.format(date) + "` 沒有公告" : description;
                 embedBuilder.setDescription(description);
