@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.nutt1101.PluginTest" time="0.005" tests="0" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.nutt1101.PluginTest" time="0.004" tests="0" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="16"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="TW"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-16.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\zhang\AppData\Local\Temp\surefire3050111892845236095\surefirebooter12378499368342838984.jar C:\Users\zhang\AppData\Local\Temp\surefire3050111892845236095 2021-09-13T15-49-39_813-jvmRun1 surefire14339533916098419664tmp surefire_06342491308552741761tmp"/>
+    <property name="sun.java.command" value="C:\Users\zhang\AppData\Local\Temp\surefire16853524215036951339\surefirebooter3254017178603189147.jar C:\Users\zhang\AppData\Local\Temp\surefire16853524215036951339 2021-09-13T18-28-32_638-jvmRun1 surefire2964851531889255710tmp surefire_01383379100931997550tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="c:\Users\zhang\plugin_dev\NUTTDiscordBot\target\test-classes;c:\Users\zhang\plugin_dev\NUTTDiscordBot\target\classes;C:\Users\zhang\.m2\repository\org\spigotmc\spigot-api\1.17.1-R0.1-SNAPSHOT\spigot-api-1.17.1-R0.1-SNAPSHOT.jar;C:\Users\zhang\.m2\repository\commons-lang\commons-lang\2.6\commons-lang-2.6.jar;C:\Users\zhang\.m2\repository\com\google\guava\guava\21.0\guava-21.0.jar;C:\Users\zhang\.m2\repository\com\google\code\gson\gson\2.8.0\gson-2.8.0.jar;C:\Users\zhang\.m2\repository\net\md-5\bungeecord-chat\1.16-R0.4\bungeecord-chat-1.16-R0.4.jar;C:\Users\zhang\.m2\repository\org\yaml\snakeyaml\1.28\snakeyaml-1.28.jar;C:\Users\zhang\.m2\repository\net\dv8tion\JDA\4.3.0_277\JDA-4.3.0_277.jar;C:\Users\zhang\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\zhang\.m2\repository\org\jetbrains\annotations\16.0.1\annotations-16.0.1.jar;C:\Users\zhang\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\zhang\.m2\repository\com\neovisionaries\nv-websocket-client\2.14\nv-websocket-client-2.14.jar;C:\Users\zhang\.m2\repository\com\squareup\okhttp3\okhttp\3.13.0\okhttp-3.13.0.jar;C:\Users\zhang\.m2\repository\com\squareup\okio\okio\1.17.2\okio-1.17.2.jar;C:\Users\zhang\.m2\repository\club\minnced\opus-java-api\1.1.0\opus-java-api-1.1.0.jar;C:\Users\zhang\.m2\repository\net\java\dev\jna\jna\4.4.0\jna-4.4.0.jar;C:\Users\zhang\.m2\repository\club\minnced\opus-java-natives\1.1.0\opus-java-natives-1.1.0.jar;C:\Users\zhang\.m2\repository\org\apache\commons\commons-collections4\4.1\commons-collections4-4.1.jar;C:\Users\zhang\.m2\repository\net\sf\trove4j\trove4j\3.0.3\trove4j-3.0.3.jar;C:\Users\zhang\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.10.1\jackson-databind-2.10.1.jar;C:\Users\zhang\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.10.1\jackson-annotations-2.10.1.jar;C:\Users\zhang\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.10.1\jackson-core-2.10.1.jar;C:\Users\zhang\.m2\repository\org\jsoup\jsoup\1.14.2\jsoup-1.14.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\zhang\AppData\Local\Temp\surefire3050111892845236095\surefirebooter12378499368342838984.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\zhang\AppData\Local\Temp\surefire16853524215036951339\surefirebooter3254017178603189147.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="16.0.2+7-67"/>

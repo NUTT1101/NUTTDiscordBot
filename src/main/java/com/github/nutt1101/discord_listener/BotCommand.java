@@ -1,10 +1,10 @@
 package com.github.nutt1101.discord_listener;
 
 import java.awt.Color;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.github.nutt1101.Config;
+import com.github.nutt1101.NUTTDiscordBot;
 import com.github.nutt1101.SSLHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -17,6 +17,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class BotCommand extends ListenerAdapter{
+
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         String[] message = event.getMessage().getContentRaw().split("");
@@ -76,36 +78,8 @@ public class BotCommand extends ListenerAdapter{
             try {
                 Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
                 JsonArray jsonArray = getDataJsonaArray(document);
-                Date date = new Date();
-                SimpleDateFormat sm = new SimpleDateFormat("yyyy/MM/dd");
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                String description = "";
-                embedBuilder.setAuthor("新生專區今天的公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
-                embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
-
-                for (int i=0 ; i < jsonArray.size(); i++) {
-                    if (jsonArray.get(i) != null) {
-                        String docDate = jsonArray.get(i).getAsJsonObject().get("update").getAsString().replace(" ", "");
-
-                        if (sm.format(date).equals(docDate)) {
-                            description = description + "[" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
-                            getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
-                        }
-                    }
-                }
-                
-                String sort[] = description.split("\n\n");
-
-                for (int i=0; i < sort.length ; i++) {
-                    sort[i] = String.valueOf(i+1) + " ." + sort[i]; 
-                }
-
-                description = StringUtils.join(sort, "\n\n");
-
-                description = description.equals("") ? "今天 `" + sm.format(date) + "` 沒有公告" : description;
-                embedBuilder.setDescription(description);
+                EmbedBuilder embedBuilder = getTodayAnnounce(jsonArray);
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
-            
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -128,5 +102,36 @@ public class BotCommand extends ListenerAdapter{
     
     public static String getLink(String id) {
         return "https://www.dyu.edu.tw/news.html?msg_ID=" + id +"&pool_ID=37&isHidden=1&goBack=1";
+    }
+
+    public static EmbedBuilder getTodayAnnounce(JsonArray jsonArray) {
+        Date date = new Date();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        String description = "";
+        embedBuilder.setAuthor("新生專區今天的公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
+        embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
+
+        for (int i=0 ; i < jsonArray.size(); i++) {
+            if (jsonArray.get(i) != null) {
+                String docDate = jsonArray.get(i).getAsJsonObject().get("update").getAsString().replace(" ", "");
+
+                if (NUTTDiscordBot.yearMonthDayFormat.format(date).equals(docDate)) {
+                    description = description + "[" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
+                    getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
+                }
+            }
+        }
+        
+        String sort[] = description.split("\n\n");
+
+        for (int i=0; i < sort.length ; i++) {
+            sort[i] = String.valueOf(i+1) + " ." + sort[i]; 
+        }
+
+        description = StringUtils.join(sort, "\n\n");
+
+        description = description.equals("") ? "今天 `" + NUTTDiscordBot.yearMonthDayFormat.format(date) + "` 沒有公告" : description;
+        embedBuilder.setDescription(description);
+        return embedBuilder;
     }
 }

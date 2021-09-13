@@ -2,6 +2,7 @@ package com.github.nutt1101;
 
 import java.util.logging.Level;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 
 import com.github.nutt1101.discord_listener.BotCommand;
 import com.github.nutt1101.discord_listener.BotReady;
@@ -15,6 +16,8 @@ import net.dv8tion.jda.api.JDABuilder;
 
 public class NUTTDiscordBot extends JavaPlugin{
     public static JDA jda;
+    public static SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat("yyyy/MM/dd");
+    public static SimpleDateFormat hour_24Format = new SimpleDateFormat("HH:mm");
 
     @Override
     public void onEnable() {
