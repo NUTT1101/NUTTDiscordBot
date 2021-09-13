@@ -22,10 +22,6 @@ public class BotReady implements EventListener{
             embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
             embedBuilder.setDescription(Config.bootEmDescription);
             jda.getTextChannelById(Config.channelID).sendMessage(embedBuilder.build()).queue();
-            
         }
-        
     }
-
-    
 }

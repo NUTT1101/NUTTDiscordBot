@@ -38,10 +38,11 @@ public class Asyn {
                             Config.bootEmAuthorImageLink);
                         
                         embedBuilder.setDescription("[" + title + "]" + "("+ BotCommand.getLink(jsonArray.get(0).getAsJsonObject().get("ID").getAsString()) +")");
-                        jda.getTextChannelById("883674307086151763").sendMessage(embedBuilder.build()).queue();
                         jda.getTextChannelById("883674307086151763").sendMessage(jda.getRoleById("883571005073784873").getAsMention()).queue();
+                        jda.getTextChannelById("883674307086151763").sendMessage(embedBuilder.build()).queue();
+                        id = jsonArray.get(0).getAsJsonObject().get("ID").getAsString();
                     }
-                
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
