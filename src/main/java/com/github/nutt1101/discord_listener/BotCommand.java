@@ -84,6 +84,34 @@ public class BotCommand extends ListenerAdapter{
                 e.printStackTrace();
             }
         }
+
+        if (event.getMessage().getContentRaw().contains("$search")) {
+            if (event.getMessage().getContentRaw().contains(" ")) {
+                String search = event.getMessage().getContentRaw().split(" ")[1];
+                try {
+                    Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                    JsonArray jsonArray = getDataJsonaArray(document);    
+                    EmbedBuilder embedBuilder  = new EmbedBuilder();
+                    embedBuilder.setAuthor("包含 " + search + " 的所有內容如下", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
+                    String description = "";
+
+                    for (int i=0; i< 15; i++) {
+                        if (jsonArray.get(i).getAsJsonObject().get("title").getAsString().contains(search)) {
+                            description = description + "[" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
+                                getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
+                        }
+                    }
+                    description = description.equals("") ? "沒有查詢到包含 " + search + " 的內容" : description;
+                    description = reorganizeDescription(description);
+                    embedBuilder.setDescription(description);
+
+                    event.getMessage().getChannel().sendMessage(embedBuilder.build()).queue();
+
+                } catch (Exception e) {   
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static JsonArray getDataJsonaArray(Document document) {
@@ -121,17 +149,17 @@ public class BotCommand extends ListenerAdapter{
                 }
             }
         }
-        
-        String sort[] = description.split("\n\n");
+        description = description.equals("") ? "今天 `" + NUTTDiscordBot.yearMonthDayFormat.format(date) + "` 沒有公告" : description;
+        description =  reorganizeDescription(description);
+        embedBuilder.setDescription(description);
+        return embedBuilder;
+    }
 
+    public static String reorganizeDescription(String description) {
+        String sort[] = description.split("\n\n");
         for (int i=0; i < sort.length ; i++) {
             sort[i] = String.valueOf(i+1) + " ." + sort[i]; 
         }
-
-        description = StringUtils.join(sort, "\n\n");
-
-        description = description.equals("") ? "今天 `" + NUTTDiscordBot.yearMonthDayFormat.format(date) + "` 沒有公告" : description;
-        embedBuilder.setDescription(description);
-        return embedBuilder;
+        return StringUtils.join(sort, "\n\n");
     }
 }
