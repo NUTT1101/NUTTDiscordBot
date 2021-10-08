@@ -106,10 +106,9 @@ public class BotCommand extends ListenerAdapter{
 
                     int count = 0;
                     while (description.length() >= 1500) {
-                        List<String> total = Arrays.asList(description.split("\n\n"));
-                        List<String> all = new ArrayList<>(total);
-                        all.remove(all.size() - 1);
-                        description = String.join("\n\n", all);
+                        List<String> allSearchAnnounce = new ArrayList<>(Arrays.asList(description.split("\n\n")));
+                        allSearchAnnounce.remove(allSearchAnnounce.size() - 1);
+                        description = String.join("\n\n", allSearchAnnounce);
                         count++;
                     }
         
