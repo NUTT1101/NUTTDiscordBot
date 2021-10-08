@@ -43,7 +43,7 @@ public class Asyn {
                             String title = jsonArray.get(i).getAsJsonObject().get("title").getAsString();
                             
                             embedBuilder.setAuthor("新生專區有最新消息!", 
-                                BotCommand.getLink(jsonArray.get(0).getAsJsonObject().get("ID").getAsString()) , 
+                                BotCommand.getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) , 
                                 Config.bootEmAuthorImageLink);
                             embedBuilder.setDescription("[" + title + "]" + "("+ BotCommand.getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) +")");
                             embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
