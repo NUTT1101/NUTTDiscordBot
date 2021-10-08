@@ -56,7 +56,7 @@ public class Asyn {
                     }
 
                     if (NUTTDiscordBot.hour_24Format.format(new Date()).equals("20:00")) {
-                        EmbedBuilder embedBuilder = BotCommand.getTodayAnnounce(BotCommand.getDataJsonaArray(document));
+                        EmbedBuilder embedBuilder = BotCommand.getTodayAnnouncement(BotCommand.getDataJsonaArray(document));
                         embedBuilder.setAuthor("結至現在新生專區今天的所有公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
                         jda.getTextChannelById("883674307086151763").sendMessage(embedBuilder.build()).queue();
                     }

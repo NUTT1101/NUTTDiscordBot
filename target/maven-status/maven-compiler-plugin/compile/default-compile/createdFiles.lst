@@ -1,0 +1,8 @@
+com\github\nutt1101\NUTTDiscordBot.class
+com\github\nutt1101\Config.class
+com\github\nutt1101\SSLHelper.class
+com\github\nutt1101\SSLHelper$1.class
+com\github\nutt1101\discord_listener\BotReady.class
+com\github\nutt1101\Asyn$1.class
+com\github\nutt1101\discord_listener\BotCommand.class
+com\github\nutt1101\Asyn.class

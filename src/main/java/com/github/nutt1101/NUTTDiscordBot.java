@@ -23,6 +23,7 @@ public class NUTTDiscordBot extends JavaPlugin{
     public void onEnable() {
         this.getLogger().log(Level.INFO, ChatColor.GREEN + "Power by NUTT1101");
         Config.pluginInit();
+
         try {
             jda = JDABuilder.createDefault(Config.botToken).build();
             jda.addEventListener(new BotReady());

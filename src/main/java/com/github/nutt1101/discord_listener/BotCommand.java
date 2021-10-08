@@ -12,7 +12,6 @@ import com.github.nutt1101.SSLHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
-import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,7 +20,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class BotCommand extends ListenerAdapter{
 
-
+    /**
+     * message event
+     */
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         String[] message = event.getMessage().getContentRaw().split("");
@@ -58,12 +59,10 @@ public class BotCommand extends ListenerAdapter{
 
                 for (int i=0; i < 15; i++) {
                     embedBuilder.setAuthor(document.title() + "公告", "http://fresh.dyu.edu.tw/", Config.bootEmAuthorImageLink);
-
                     if (jsonArray.get(i) != null) {
                         description = description + String.valueOf(i + 1) +  ". [" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
                         getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
                     }
-                    
                 }
                 embedBuilder.setDescription(description);
                 event.getChannel().sendMessage(embedBuilder.build()).queue();;
@@ -80,7 +79,7 @@ public class BotCommand extends ListenerAdapter{
             try {
                 Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
                 JsonArray jsonArray = getDataJsonaArray(document);
-                EmbedBuilder embedBuilder = getTodayAnnounce(jsonArray);
+                EmbedBuilder embedBuilder = getTodayAnnouncement(jsonArray);
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -111,7 +110,7 @@ public class BotCommand extends ListenerAdapter{
                         description = String.join("\n\n", allSearchAnnounce);
                         count++;
                     }
-        
+                    
                     if (count != 0) {
                         embedBuilder.setFooter("查詢到的內容還有 " + count + " 則");
                     }
@@ -119,9 +118,7 @@ public class BotCommand extends ListenerAdapter{
                     description = description.equals("") ? "沒有查詢到包含 " + search + " 的內容" : description;
                     description = reorganizeDescription(description);
                     embedBuilder.setDescription(description);
-
                     event.getMessage().getChannel().sendMessage(embedBuilder.build()).queue();
-
                 } catch (Exception e) {   
                     e.printStackTrace();
                 }
@@ -129,13 +126,19 @@ public class BotCommand extends ListenerAdapter{
         }
     }
 
+
+    /**
+     * Cleansing data from announcement convert to jsonArray.
+     * 
+     * @param document web document
+     * @return all announcement -> jsonArray
+     */
     public static JsonArray getDataJsonaArray(Document document) {
         try {
             String data = document.getElementsByTag("script").get(5).toString().split("\n")[5].split("'")[1];
             JsonParser parser = new JsonParser();
             JsonArray jsonArray = parser.parse(data).getAsJsonArray();
             return jsonArray;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,11 +146,24 @@ public class BotCommand extends ListenerAdapter{
         return null;
     }
     
+    /**
+     * Input a annoucement id and convert to url.
+     * 
+     * @param id announcement id.
+     * @return announcement url.
+     */
     public static String getLink(String id) {
         return "https://www.dyu.edu.tw/news.html?msg_ID=" + id +"&pool_ID=37&isHidden=1&goBack=1";
     }
 
-    public static EmbedBuilder getTodayAnnounce(JsonArray jsonArray) {
+
+    /**
+     * Get date conform to today announcement.
+     * 
+     * @param jsonArray the web document data array.
+     * @return EmbedBuilder
+     */
+    public static EmbedBuilder getTodayAnnouncement(JsonArray jsonArray) {
         Date date = new Date();
         EmbedBuilder embedBuilder = new EmbedBuilder();
         String description = "";
@@ -170,11 +186,22 @@ public class BotCommand extends ListenerAdapter{
         return embedBuilder;
     }
 
+    /**
+     * Add a number to each announcement.
+     * 
+     * <p>input => a...\n\nb...\n\n</p>
+     * reorganize => 
+     * <p>1. a...\n\n</p>
+     * <p>2. b...</p>
+     * 
+     * @param description embedBuilder description 
+     * @return sorted descrition
+     */
     public static String reorganizeDescription(String description) {
         String sort[] = description.split("\n\n");
         for (int i=0; i < sort.length ; i++) {
-            sort[i] = String.valueOf(i+1) + " ." + sort[i]; 
+            sort[i] = String.valueOf(i+1) + ". " + sort[i]; 
         }
-        return StringUtils.join(sort, "\n\n");
+        return String.join("\n\n", sort);
     }
 }
