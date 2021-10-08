@@ -1,7 +1,10 @@
 package com.github.nutt1101.discord_listener;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import com.github.nutt1101.Config;
 import com.github.nutt1101.NUTTDiscordBot;
@@ -45,7 +48,6 @@ public class BotCommand extends ListenerAdapter{
         }
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase("$fresh_ann")) {
-
             try {
                 Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
                 JsonArray jsonArray = getDataJsonaArray(document);    
@@ -95,12 +97,26 @@ public class BotCommand extends ListenerAdapter{
                     embedBuilder.setAuthor("包含 " + search + " 的所有內容如下", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
                     String description = "";
 
-                    for (int i=0; i< 15; i++) {
+                    for (int i=0; i< jsonArray.size(); i++) {
                         if (jsonArray.get(i).getAsJsonObject().get("title").getAsString().contains(search)) {
                             description = description + "[" + jsonArray.get(i).getAsJsonObject().get("title").getAsString() + "]" + "(" + 
                                 getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) + ")\n\n";
                         }
                     }
+
+                    int count = 0;
+                    while (description.length() >= 1500) {
+                        List<String> total = Arrays.asList(description.split("\n\n"));
+                        List<String> all = new ArrayList<>(total);
+                        all.remove(all.size() - 1);
+                        description = String.join("\n\n", all);
+                        count++;
+                    }
+        
+                    if (count != 0) {
+                        embedBuilder.setFooter("查詢到的內容還有 " + count + " 則");
+                    }
+
                     description = description.equals("") ? "沒有查詢到包含 " + search + " 的內容" : description;
                     description = reorganizeDescription(description);
                     embedBuilder.setDescription(description);
