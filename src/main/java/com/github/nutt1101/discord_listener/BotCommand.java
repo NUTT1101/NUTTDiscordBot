@@ -48,13 +48,13 @@ public class BotCommand extends ListenerAdapter{
             return;
         }
 
-        if (event.getMessage().getContentRaw().equalsIgnoreCase("$fresh_ann")) {
+        if (event.getMessage().getContentRaw().equalsIgnoreCase("$ann")) {
             try {
-                Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                Document document = SSLHelper.getConnection(Config.crawlingWeb).get();
                 JsonArray jsonArray = getDataJsonaArray(document);    
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
-                embedBuilder.setFooter("新生專區還有" + String.valueOf(jsonArray.size() - 15) + "則消息");
+                embedBuilder.setFooter("還有" + String.valueOf(jsonArray.size() - 15) + "則消息");
                 String description = "";
 
                 for (int i=0; i < 15; i++) {
@@ -75,9 +75,9 @@ public class BotCommand extends ListenerAdapter{
             return;
         }
 
-        if (event.getMessage().getContentRaw().equalsIgnoreCase("$fresh_ann today")) {
+        if (event.getMessage().getContentRaw().equalsIgnoreCase("$ann today")) {
             try {
-                Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                Document document = SSLHelper.getConnection(Config.crawlingWeb).get();
                 JsonArray jsonArray = getDataJsonaArray(document);
                 EmbedBuilder embedBuilder = getTodayAnnouncement(jsonArray);
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
@@ -90,7 +90,7 @@ public class BotCommand extends ListenerAdapter{
             if (event.getMessage().getContentRaw().contains(" ")) {
                 String search = event.getMessage().getContentRaw().split(" ")[1];
                 try {
-                    Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                    Document document = SSLHelper.getConnection(Config.crawlingWeb).get();
                     JsonArray jsonArray = getDataJsonaArray(document);    
                     EmbedBuilder embedBuilder  = new EmbedBuilder();
                     embedBuilder.setAuthor("包含 " + search + " 的所有內容如下", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
@@ -167,7 +167,7 @@ public class BotCommand extends ListenerAdapter{
         Date date = new Date();
         EmbedBuilder embedBuilder = new EmbedBuilder();
         String description = "";
-        embedBuilder.setAuthor("新生專區今天的公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
+        embedBuilder.setAuthor("今天的公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
         embedBuilder.setColor(Color.decode(Config.bootEmHexColor));
 
         for (int i=0 ; i < jsonArray.size(); i++) {

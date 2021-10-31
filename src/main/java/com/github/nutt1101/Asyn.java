@@ -27,22 +27,22 @@ public class Asyn {
             @Override
             public void run() {            
                 try {
-                    Document document = SSLHelper.getConnection("https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37").get();
+                    Document document = SSLHelper.getConnection(Config.crawlingWeb).get();
                     JsonArray jsonArray = BotCommand.getDataJsonaArray(document);
 
                     if (idList.isEmpty()) {
-                        for (int i=0; i < 10; i++) {
+                        for (int i=0; i < 20; i++) {
                             if (jsonArray.get(i) != null) {
                                 idList.add(jsonArray.get(i).getAsJsonObject().get("ID").getAsString());
                             }
                         }
                     } 
                     
-                    for (int i=0; i < 10; i++) {
+                    for (int i=0; i < 20; i++) {
                         if (!idList.contains(jsonArray.get(i).getAsJsonObject().get("ID").getAsString())) {
                             String title = jsonArray.get(i).getAsJsonObject().get("title").getAsString();
                             
-                            embedBuilder.setAuthor("新生專區有最新消息!", 
+                            embedBuilder.setAuthor("有最新消息!", 
                                 BotCommand.getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) , 
                                 Config.bootEmAuthorImageLink);
                             embedBuilder.setDescription("[" + title + "]" + "("+ BotCommand.getLink(jsonArray.get(i).getAsJsonObject().get("ID").getAsString()) +")");
@@ -57,7 +57,7 @@ public class Asyn {
 
                     if (NUTTDiscordBot.hour_24Format.format(new Date()).equals("20:00")) {
                         EmbedBuilder embedBuilder = BotCommand.getTodayAnnouncement(BotCommand.getDataJsonaArray(document));
-                        embedBuilder.setAuthor("結至現在新生專區今天的所有公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
+                        embedBuilder.setAuthor("結至現在今天的所有公告", Config.bootEmAuthorTextLink, Config.bootEmAuthorImageLink);
                         jda.getTextChannelById("883674307086151763").sendMessage(embedBuilder.build()).queue();
                     }
 

@@ -1,6 +1,6 @@
 Bot-Token: ""
 Discord-Channel: ""
-Crawling-Web: "https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1&pool_ID=37"
+Crawling-Web: "https://bulletin.dyu.edu.tw/index.php?goBack=1&isHidden=1"
 Boot-EmbedBuilder:
   HexColor: "#007654"
   Author:
